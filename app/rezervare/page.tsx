@@ -35,15 +35,37 @@ export default function RezervariePage() {
     }
 
     const [year, month, day] = formData.checkIn.split("-").map(Number);
-    const checkInPrice = getPriceByMonth(month);
-    const season = getSeasonNameByMonth(month);
+    // Datele tale pe care le vei modifica o dată pe an aici în cod
+const tarife = {
+  ian_martie: 220,
+  aprilie: 230,
+  mai:240,    
+  sezonMediu: 250,    // Iun, Sept
+  varfSezon: 300,     // Iul-Aug, Dec
+  oct_nov: 230,    // Oct-Nov
+  pretPatSuplimentar: 50
+};
+
+// Funcția care calculează prețul în funcție de lună
+function getPriceByMonth(dateString: string) {
+  if (!dateString) return tarife.ian_martie;
+  const month = new Date(dateString).getMonth() + 1; // 1 = Ianuarie
+
+  if ([1, 2, 3].includes(month)) return tarife.ian_martie;
+  if ([4].includes(month)) return tarife.aprilie;
+  if ([5].includes(month)) return tarife.mai;
+  if ([6, 9].includes(month)) return tarife.sezonMediu;
+  if ([10,11].includes(month)) return tarife.oct_nov;
+  if ([7,8].includes(month)) return tarife.varfSezon;
+  return tarife.ian_martie;
+}
+    const checkInPrice = getPriceByMonth(formData.checkIn);
     
-    setSeasonName(season);
 
     // Calcul preț cu pat suplimentar dacă e cazul
     const finalNightlyPrice =
       formData.tipCamera === "dubla-suplimentar"
-        ? checkInPrice + tarife.pretPatSuplimentar
+        ? checkInPrice + 50
         : checkInPrice;
 
     setNightlyPrice(finalNightlyPrice);
@@ -339,7 +361,7 @@ export default function RezervariePage() {
                       onChange={handleChange}
                       className="w-full rounded-lg border border-[#E0D4C5] bg-white px-4 py-3 text-[#3E2A20] outline-none transition focus:border-[#9C6644] focus:ring-2 focus:ring-[#9C6644]/20"
                     >
-                      <option value="dubla">Cameră Dublă (250 RON/noapte)</option>
+                      <option value="dubla">Cameră Dublă </option>
                       <option value="dubla-suplimentar">
                         Cameră Dublă cu Pat Suplimentar (+50 RON/noapte)
                       </option>
