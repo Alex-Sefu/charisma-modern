@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import { getPriceByMonth, getSeasonNameByMonth } from "@/src/utils/getPriceByMonth";
-import tarife from "@/src/data/tarife.json";
 
 export default function RezervariePage() {
   const [isLoading, setIsLoading] = useState(false);
