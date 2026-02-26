@@ -3,6 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --sage-green: #a3b18a;
+  --crem: #f5ebe0;
+  --off-white: #fefae0;
+  --earthy-brown: #6b705c;
+  --dark-brown: #3e2a20;
+  --medium-brown: #9c6644;
 }
 
 @theme inline {
@@ -10,6 +16,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-playfair);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,4 +30,269 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
 }
+
+/* Animații fade-in la scroll */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Smooth scroll pentru links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hover effect pentru imagini */
+img {
+  transition: transform 0.3s ease-out;
+}
+
+/* Focus styles pentru accessibility */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--crem);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sage-green);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--earthy-brown);
+}
+
+/* ===== ACCESSIBILITY MODES ===== */
+
+/* Hide Next.js dev overlay button (N button) and entire dev overlay */
+[data-nextjs-dialog-overlay],
+[data-nextjs-dialog],
+button[aria-label*="Open"],
+button[aria-label*="open"],
+[id*="__nextjs"],
+[class*="__nextjs"],
+.next-dev-overlay {
+  display: none !important;
+}
+
+/* Hide Next.js error overlay and similar overlays */
+iframe[src*="/__error-overlay"],
+[style*="position: fixed"][style*="z-index"][style*="bottom: 0"],
+[data-theme-toggle],
+button[aria-label*="theme"],
+button[aria-label*="Theme"],
+button[aria-label*="dark"],
+button[aria-label*="Dark"] {
+  display: none !important;
+}
+
+/* Specifically target the N button from Next.js dev panel */
+div > button[style*="position"],
+button[style*="background: rgb(0, 0, 0)"],
+button[style*="background-color: rgb(0, 0, 0)"] {
+  display: none !important;
+}
+
+/* High Contrast Mode */
+html.high-contrast-mode {
+  --background: #000;
+  --foreground: #fff;
+}
+
+html.high-contrast-mode body {
+  background: #000;
+  color: #fff;
+}
+
+html.high-contrast-mode {
+  --sage-green: #fff;
+  --crem: #000;
+  --off-white: #000;
+  --dark-brown: #fff;
+  --medium-brown: #fff;
+  --earthy-brown: #fff;
+}
+
+html.high-contrast-mode * {
+  background-color: #000 !important;
+  color: #fff !important;
+  border-color: #fff !important;
+}
+
+html.high-contrast-mode a {
+  color: #ffff00 !important;
+  text-decoration: underline !important;
+}
+
+html.high-contrast-mode button {
+  background-color: #fff !important;
+  color: #000 !important;
+  border: 2px solid #fff !important;
+}
+
+html.high-contrast-mode button:hover {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+html.high-contrast-mode input,
+html.high-contrast-mode textarea,
+html.high-contrast-mode select {
+  background-color: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+
+html.high-contrast-mode [class*="bg-"] {
+  background-color: #000 !important;
+}
+
+html.high-contrast-mode [class*="text-"] {
+  color: #fff !important;
+}
+
+html.high-contrast-mode .border-t,
+html.high-contrast-mode .border-b,
+html.high-contrast-mode .border-l,
+html.high-contrast-mode .border-r {
+  border-color: #fff !important;
+}
+
+/* Reduced Saturation Mode */
+html.reduced-saturation-mode {
+  filter: saturate(0.5);
+}
+
+/* Monochrome Mode */
+html.monochrome-mode {
+  filter: grayscale(1) contrast(1.1);
+}
+
+/* Link Highlighting Mode */
+html.highlight-links-mode a {
+  outline: 3px solid #8FB373 !important;
+  outline-offset: 2px !important;
+  text-decoration: underline !important;
+  text-decoration-thickness: 3px !important;
+  font-weight: 600 !important;
+}
+
+html.highlight-links-mode a:hover {
+  background-color: rgba(143, 179, 115, 0.2) !important;
+  outline-width: 4px !important;
+}
+
+/* Title Highlighting Mode */
+html.highlight-titles-mode h1,
+html.highlight-titles-mode h2,
+html.highlight-titles-mode h3,
+html.highlight-titles-mode h4,
+html.highlight-titles-mode h5,
+html.highlight-titles-mode h6 {
+  outline: 2px solid #9C6644 !important;
+  outline-offset: 3px !important;
+  background-color: rgba(156, 102, 68, 0.1) !important;
+  padding: 8px 12px !important;
+  border-radius: 4px !important;
+}
+
+/* Readable Fonts Mode */
+html.readable-fonts-mode {
+  font-family: "Arial", "Verdana", "Georgia", sans-serif !important;
+  letter-spacing: 0.05em !important;
+  line-height: 1.8 !important;
+}
+
+html.readable-fonts-mode * {
+  font-family: "Arial", "Verdana", "Georgia", sans-serif !important;
+}
+
+/* Large Cursor Mode */
+html.large-cursor-mode {
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><circle cx="20" cy="20" r="15" fill="none" stroke="black" stroke-width="2"/><circle cx="20" cy="20" r="3" fill="black"/></svg>') 20 20, auto !important;
+}
+
+html.large-cursor-mode *,
+html.large-cursor-mode *:hover,
+html.large-cursor-mode *:focus {
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><circle cx="20" cy="20" r="15" fill="none" stroke="black" stroke-width="2"/><circle cx="20" cy="20" r="3" fill="black"/></svg>') 20 20, auto !important;
+}
+
+/* Stop Animations Mode */
+html.stop-animations-mode * {
+  animation: none !important;
+  transition: none !important;
+}
+
+html.stop-animations-mode,
+html.stop-animations-mode *,
+html.stop-animations-mode *::before,
+html.stop-animations-mode *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Combined: High Contrast + Link Highlighting */
+html.high-contrast-mode.highlight-links-mode a {
+  outline: 3px solid #ffff00 !important;
+  color: #ffff00 !important;
+}
+
+/* Font size adjustments */
+html {
+  font-size: 16px;
+  transition: font-size 0.3s ease;
+}
+
+/* Animations for accessibility menu */
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: slideInFromBottom 0.2s ease-out;
+}
+

@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏨 Pensiunea Charisma - Site Oficial
 
-## Getting Started
+Acesta este proiectul web pentru Pensiunea Charisma din Băile Herculane. Este un site modern, de tip broșură digitală, construit pentru a facilita rezervările directe.
 
-First, run the development server:
+## 📋 Informații Tehnice
+- **Framework:** Next.js 14+ (App Router)
+- **CSS:** Tailwind CSS
+- **Componente:** Lucide React (pentru iconițe)
+- **Formulare:** Web3Forms API (trimitere email)
+- **Securitate:** hCaptcha
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ⚙️ Configurare (Setup)
+Dacă vrei să lucrezi pe cod, după ce descarci arhiva:
+1. Descarcă node_modules: `npm install`
+2. Rulează proiectul: `npm run dev`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔑 Chei API Necesare
+Pentru ca site-ul să fie funcțional 100%, trebuie adăugate următoarele variabile de mediu (Environment Variables) în platforma de hosting (ex: Vercel):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `NEXT_PUBLIC_WEB3FORMS_KEY`: Cheia primită de la Web3Forms pentru trimiterea mail-urilor.
+- `NEXT_PUBLIC_HCAPTCHA_SITEKEY`: Site Key-ul de la hCaptcha pentru protecția formularului.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🌟 Funcționalități Implementate
+- **Prețuri Dinamice:** Calculator automat în pagina de rezervare care schimbă tariful în funcție de lună și opțiunea de pat suplimentar.
+- **Interfață Curată:** Design pe nuanțe de Verde Salvie și Crem.
+- **Fără Bază de Date:** Am optat pentru o soluție serverless (email-based) pentru a elimina costurile de întreținere a unei baze de date.
+- **Harta Interactivă:** Localizare precisă cu pinpoint în Băile Herculane.
 
-## Learn More
+## 📌 De Reținut pentru Hosting
+- Site-ul este gata pentru a fi urcat pe Vercel (este recomandat pentru Next.js).
+- Trebuie verificate căile imaginilor din folderul `/public` (să corespundă cu numele fișierelor foto reale).
+- Am specificat clar în text că pensiunea NU are restaurant/mic dejun, deci nu trebuie modificate acele avertismente fără consultare.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Creat cu ajutorul AI pentru Pensiunea Charisma.
