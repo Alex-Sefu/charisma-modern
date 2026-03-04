@@ -98,7 +98,7 @@ export default function OrasPage() {
         <div className="mb-12 rounded-2xl bg-[#F5EBE0] p-8">
           <h2 className="font-serif text-2xl text-[#3E2A20] mb-3">Sfatul nostru</h2>
           <p className="text-[#5A4638] leading-relaxed">
-            Pentru o experiență completă, combinați aceste atracții cu o zi de relaxare și odihna la Pensiunea Charisma. După explorarea orașului, vă așteptăm cu facilități de top și o atmosferă de neuitat.
+            Pentru o experiență completă, combinați aceste atracții cu o zi de relaxare și odihna la Pensiunea Charisma. După explorarea orașului, vă așteptăm cu o atmosferă de neuitat.
           </p>
         </div>
 
