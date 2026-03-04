@@ -400,7 +400,7 @@ function getPriceByMonth(dateString: string) {
                     onChange={handleChange}
                     rows={5}
                     className="w-full rounded-lg border border-[#E0D4C5] bg-white px-4 py-3 text-[#3E2A20] placeholder-[#8FB373] outline-none transition focus:border-[#9C6644] focus:ring-2 focus:ring-[#9C6644]/20"
-                    placeholder="Preferințe de cazare, întrebări speciale, alergii alimentare, etc."
+                    placeholder="Preferințe de cazare, întrebări speciale, etc."
                   />
                   <p className="mt-1 text-xs text-[#7B6B5C]">
                     Maxim 500 de caractere
