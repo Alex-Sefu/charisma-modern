@@ -50,7 +50,7 @@ export default function Home() {
                   Pensiune în Băile Herculane
                 </p>
                 <h1 className="mb-4 font-serif text-3xl leading-tight text-[#FEFAE0] md:text-5xl lg:text-6xl">
-                  Eleganță și Confort
+                  Eleganță rustică și Confort
                   <br />în Inima Naturii
                 </h1>
                 <p className="mb-8 max-w-md text-sm text-[#FEFAE0]/85 md:text-base">
@@ -90,8 +90,7 @@ export default function Home() {
 
                 <div className="mt-6 space-y-4 text-sm text-[#5A4638]">
                   <p>
-                    Pensiunea noastră dispune de un total de <strong>12 camere duble</strong>, oferind o capacitate totală de
-                    <strong> 24 locuri</strong>. Fiecare spațiu este proiectat cu atenție la detalii, garantând confort și
+                    Pensiunea noastră dispune de un total de <strong>12 camere duble</strong>. Fiecare spațiu este proiectat cu atenție la detalii, garantând confort și
                     intimitate pentru fiecare oaspete.
                   </p>
                    <p>
@@ -377,7 +376,7 @@ export default function Home() {
                   <br/> 
                   0723 886 182 
                   <br />
-                  0255 561 371
+                  0255 561 381
                 </p>
                 <p className="text-[#5A4638] mb-4">
                   <span className="font-medium">Email:</span>
