@@ -112,30 +112,39 @@ export default function Navbar() {
         </div>
 
         <div className="md:hidden flex items-center gap-3">
-          <Link href="/rezervare" className="inline-flex items-center gap-2 rounded-full bg-[#9C6644] px-4 py-2 text-xs font-medium tracking-wide text-[#FEFAE0] shadow-sm transition-colors hover:bg-[#846644]">Rezervă</Link>
-          <div className="relative">
-            <button
-              aria-expanded={open}
-              onClick={() => setOpen((s) => !s)}
-              className="list-none cursor-pointer rounded-full bg-white/10 px-3 py-2"
-            >
-              <span className="sr-only">Open menu</span>
-              <svg className="h-5 w-5 text-[#3E2A20]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
+  <Link href="/rezervare" className="inline-flex items-center gap-2 rounded-full bg-[#9C6644] px-4 py-2 text-xs font-medium tracking-wide text-[#FEFAE0] shadow-sm transition-colors hover:bg-[#846644]">
+    Rezervă
+  </Link>
+  
+  <div className="relative" ref={containerRef}>
+    <button
+      aria-expanded={open}
+      onClick={() => setOpen((s) => !s)}
+      className="list-none cursor-pointer rounded-full bg-white/10 px-3 py-2"
+    >
+      <span className="sr-only">Open menu</span>
+      <svg className="h-5 w-5 text-[#3E2A20]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
 
-            <div className={"absolute right-0 mt-2 w-56 rounded-2xl bg-[#F5EBE0] text-[#3E2A20] border border-[#E0D4C5] shadow-lg py-2 z-50 " + (open ? "block" : "hidden")}>
-              <Link href="#cazare" className="block px-4 py-2 text-sm hover:bg-[#E8D5C4] rounded-lg transition-colors m-1">Cazare</Link>
-              <Link href="#facilitati" className="block px-4 py-2 text-sm hover:bg-[#E8D5C4] rounded-lg transition-colors m-1">Facilități</Link>
-              <Link href="#galerie" className="block px-4 py-2 text-sm hover:bg-[#E8D5C4] rounded-lg transition-colors m-1">Galerie</Link>
-              <div className="border-t border-[#E0D4C5] my-2" />
-              <Link href="/agrement/oras" className="block px-4 py-2 text-sm hover:bg-[#E8D5C4] rounded-lg transition-colors m-1">Ce este de văzut în oraș și împrejurimi</Link> 
-              <Link href="/agrement/trasee" className="block px-4 py-2 text-sm hover:bg-[#E8D5C4] rounded-lg transition-colors m-1">Trasee turistice</Link>
-              <Link href="#contact" className="block px-4 py-2 text-sm hover:bg-[#E8D5C4] rounded-lg transition-colors m-1">Contact</Link>
-            </div>
-          </div>
-        </div>
+    {/* MENIUL MOBIL */}
+    <div className={"absolute right-0 mt-2 w-64 rounded-2xl bg-[#F5EBE0] text-[#3E2A20] border border-[#E0D4C5] shadow-2xl py-2 z-[100] " + (open ? "block" : "hidden")}>
+      {/* Folosim <a> pentru scroll pe aceeasi pagina si setOpen(false) ca sa se inchida meniul */}
+      <a href="#cazare" onClick={() => setOpen(false)} className="block px-4 py-3 text-sm hover:bg-[#E8D5C4] rounded-lg transition-colors m-1">Cazare</a>
+      <a href="#facilitati" onClick={() => setOpen(false)} className="block px-4 py-3 text-sm hover:bg-[#E8D5C4] rounded-lg transition-colors m-1">Facilități</a>
+      <a href="#galerie" onClick={() => setOpen(false)} className="block px-4 py-3 text-sm hover:bg-[#E8D5C4] rounded-lg transition-colors m-1">Galerie</a>
+      
+      <div className="border-t border-[#E0D4C5] my-2" />
+      
+      {/* Folosim <Link> pentru pagini diferite */}
+      <Link href="/agrement/oras" onClick={() => setOpen(false)} className="block px-4 py-3 text-sm hover:bg-[#E8D5C4] rounded-lg transition-colors m-1">Ce este de văzut</Link> 
+      <Link href="/agrement/trasee" onClick={() => setOpen(false)} className="block px-4 py-3 text-sm hover:bg-[#E8D5C4] rounded-lg transition-colors m-1">Trasee turistice</Link>
+      
+      <a href="#contact" onClick={() => setOpen(false)} className="block px-4 py-3 text-sm hover:bg-[#E8D5C4] rounded-lg transition-colors m-1">Contact</a>
+    </div>
+  </div>
+</div>
       </div>
     </header>
   );
