@@ -1,6 +1,6 @@
 # 🏨 Pensiunea Charisma - Site Oficial
 
-Acesta este proiectul web pentru Pensiunea Charisma din Băile Herculane. Este un site modern, de tip broșură digitală, construit pentru a facilita rezervările directe.
+Acesta este proiectul web pentru Pensiunea Charisma din Băile Herculane. Este un site modern, de tip broșură digitală, construit pentru a facilita rezervările directe. Gasiti site ul la "pensiune-charisma.ro"
 
 ## 📋 Informații Tehnice
 - **Framework:** Next.js 14+ (App Router)
