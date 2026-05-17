@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function RezervariePage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,86 +14,11 @@ export default function RezervariePage() {
     checkIn: "",
     checkOut: "",
     tipCamera: "dubla",
-    nrCamere: "1", // Nou adăugat
-    nrPersone: "2", // Extins până la 12
+    nrCamere: "1",
+    nrPersone: "2",
     mesaj: "",
-    botcheck: false, // Pentru Honeypot
+    botcheck: false,
   });
-  const [avgNightlyPrice, setAvgNightlyPrice] = useState<number | null>(null);
-  const [totalPrice, setTotalPrice] = useState<number | null>(null);
-  const [totalNights, setTotalNights] = useState<number>(0);
-
-  // Tarife centralizate
-  const tarife = {
-    ian_martie: 220,
-    aprilie: 230,
-    mai: 240,
-    sezonMediu: 250, // Iun, Sept
-    varfSezon: 300,  // Iul-Aug, Dec
-    oct_nov: 230,
-    pretPatSuplimentar: 50
-  };
-
-  // Funcție care determină prețul unei singure nopți pe baza datei calendaristice
-  const getSingleNightPrice = (date: Date, tipCamera: string) => {
-    const month = date.getMonth() + 1; // 1 = Ianuarie, 5 = Mai, 6 = Iunie
-    let basePrice = tarife.ian_martie;
-
-    if ([1, 2, 3].includes(month)) basePrice = tarife.ian_martie;
-    else if ([4].includes(month)) basePrice = tarife.aprilie;
-    else if ([5].includes(month)) basePrice = tarife.mai;
-    else if ([6, 9].includes(month)) basePrice = tarife.sezonMediu;
-    else if ([10, 11].includes(month)) basePrice = tarife.oct_nov;
-    else if ([7, 8, 12].includes(month)) basePrice = tarife.varfSezon;
-
-    return tipCamera === "dubla-suplimentar" 
-      ? basePrice + tarife.pretPatSuplimentar 
-      : basePrice;
-  };
-
-  const calculatePrices = () => {
-    if (!formData.checkIn || !formData.checkOut) {
-      setAvgNightlyPrice(null);
-      setTotalPrice(null);
-      setTotalNights(0);
-      return;
-    }
-
-    const start = new Date(formData.checkIn);
-    const end = new Date(formData.checkOut);
-    const diffTime = end.getTime() - start.getTime();
-    const nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    if (nights <= 0) {
-      setAvgNightlyPrice(null);
-      setTotalPrice(null);
-      setTotalNights(0);
-      return;
-    }
-
-    setTotalNights(nights);
-
-    // Calculăm prețul hibrid trecând prin fiecare noapte din sejur în mod individual
-    let calculatedTotal = 0;
-    let currentNight = new Date(start);
-
-    for (let i = 0; i < nights; i++) {
-      calculatedTotal += getSingleNightPrice(currentNight, formData.tipCamera);
-      currentNight.setDate(currentNight.getDate() + 1); // Mutăm pe ziua următoare
-    }
-
-    // Înmulțim cu numărul de camere selectat de utilizator
-    const camereFactor = parseInt(formData.nrCamere) || 1;
-    const finalTotal = calculatedTotal * camereFactor;
-
-    setTotalPrice(finalTotal);
-    // Calculăm o medie pe noapte per cameră pentru afișaj curat
-    setAvgNightlyPrice(Math.round(finalTotal / nights / camereFactor));
-  };
-
-  useEffect(() => {
-    calculatePrices();
-  }, [formData.checkIn, formData.checkOut, formData.tipCamera, formData.nrCamere]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -105,7 +30,7 @@ export default function RezervariePage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formData.botcheck) return; // Stop dacă e bot (Honeypot)
+    if (formData.botcheck) return; // Honeypot spam protection
 
     setErrorMessage("");
     setIsLoading(true);
@@ -116,12 +41,10 @@ export default function RezervariePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           access_key: "e2113dc0-a11d-4a6f-83a5-458bf6cff6b0",
-          subject: `Rezervare Nouă: ${formData.numeComplet} (${formData.nrCamere} căm.)`,
+          subject: `Solicitare Rezervare: ${formData.numeComplet} (${formData.nrCamere} căm.)`,
           from_name: "Pensiunea Charisma - Site",
           ...formData,
-          configuratie_selectata: `${formData.nrCamere} camere x ${formData.tipCamera}`,
-          numar_nopti: totalNights,
-          total_estimat_ron: totalPrice
+          detalii_camera: `${formData.nrCamere}x Cameră ${formData.tipCamera === "dubla" ? "Dublă" : "cu Pat Suplimentar"}`,
         }),
       });
 
@@ -141,10 +64,10 @@ export default function RezervariePage() {
           botcheck: false,
         });
       } else {
-        setErrorMessage("Eroare la trimitere. Verificați datele.");
+        setErrorMessage("Eroare la trimitere. Verificați datele introduse.");
       }
     } catch (error) {
-      setErrorMessage("Problemă de conexiune. Încercați telefonic.");
+      setErrorMessage("Problemă de conexiune. Vă rugăm să încercați telefonic.");
     } finally {
       setIsLoading(false);
     }
@@ -173,10 +96,10 @@ export default function RezervariePage() {
         {/* HERO */}
         <section className="py-8 md:py-12 text-center">
           <div className="mx-auto max-w-4xl px-4">
-            <p className="mb-2 text-xs uppercase tracking-[0.3em] text-[#F5EBE0]">Rezervă sejurul tău</p>
+            <p className="mb-2 text-xs uppercase tracking-[0.3em] text-[#F5EBE0]">Verificare Disponibilitate</p>
             <h1 className="mb-4 font-serif text-2xl text-white md:text-4xl drop-shadow-sm">Solicită o Rezervare</h1>
             <p className="mx-auto max-w-2xl text-sm text-[#F5EBE0]/90 md:text-base">
-              Trimite-ne detaliile sejurului tău și revenim cu confirmarea disponibilității în cel mai scurt timp.
+              Trimite-ne perioada dorită, iar noi vom verifica disponibilitatea camerelor în cel mai scurt timp.
             </p>
           </div>
         </section>
@@ -191,7 +114,6 @@ export default function RezervariePage() {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Honeypot - Protejează de spam fără hCaptcha */}
                 <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} onChange={handleChange} checked={formData.botcheck} />
 
                 <div className="grid gap-5 sm:grid-cols-2">
@@ -221,23 +143,6 @@ export default function RezervariePage() {
                   </div>
                 </div>
 
-                {/* Secțiune afișare preț calculat dinamic */}
-                {totalPrice && avgNightlyPrice && (
-                  <div className="rounded-2xl border border-[#8FB373]/30 bg-[#F5EBE0] p-5 shadow-inner animate-in fade-in slide-in-from-top-2">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-sm font-medium">Preț mediu / noapte / cameră:</span>
-                      <span className="font-bold text-[#9C6644]">{avgNightlyPrice} RON</span>
-                    </div>
-                    <div className="flex justify-between items-center pt-2 border-t border-[#E0D4C5]">
-                      <span className="text-base font-bold">Total Estimat ({totalNights} {totalNights === 1 ? 'noapte' : 'nopți'} × {formData.nrCamere} {formData.nrCamere === '1' ? 'cameră' : 'camere'}):</span>
-                      <span className="text-xl font-black text-[#3E2A20]">{totalPrice} RON</span>
-                    </div>
-                    <p className="mt-2 text-[11px] text-[#7B6B5C] italic">
-                      * Prețul total a fost calculat individual pe nopți, luând în considerare schimbările de tarif sezonier.
-                    </p>
-                  </div>
-                )}
-
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
                     <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[#5A4638]">Tip cameră *</label>
@@ -249,9 +154,7 @@ export default function RezervariePage() {
                   <div>
                     <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[#5A4638]">Număr camere *</label>
                     <select name="nrCamere" value={formData.nrCamere} onChange={handleChange} className="w-full rounded-xl border border-[#E0D4C5] bg-white px-4 py-3 outline-none focus:ring-2 focus:ring-[#9C6644]/20">
-                      {[1, 2, 3, 4, 5, 6].map(n => (
-                        <option key={n} value={n}>{n} {n === 1 ? 'cameră' : 'camere'}</option>
-                      ))}
+                      {[1, 2, 3, 4, 5, 6].map(n => <option key={n} value={n}>{n} {n === 1 ? 'cameră' : 'camere'}</option>)}
                     </select>
                   </div>
                 </div>
@@ -267,11 +170,18 @@ export default function RezervariePage() {
 
                 <div>
                   <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[#5A4638]">Mesaj (opțional)</label>
-                  <textarea name="mesaj" value={formData.mesaj} onChange={handleChange} rows={4} className="w-full rounded-xl border border-[#E0D4C5] bg-white px-4 py-3 outline-none focus:ring-2 focus:ring-[#9C6644]/20" placeholder="Ex: Preferințe organizare paturi, interval orar sosire etc..." />
+                  <textarea name="mesaj" value={formData.mesaj} onChange={handleChange} rows={4} className="w-full rounded-xl border border-[#E0D4C5] bg-white px-4 py-3 outline-none focus:ring-2 focus:ring-[#9C6644]/20" placeholder="Ex: Structura dorită pe camere, dacă aveți copii, detalii despre parcare..." />
+                </div>
+
+                {/* Caseta Informativă Pro */}
+                <div className="rounded-2xl border border-[#8FB373]/30 bg-[#F5EBE0] p-4 text-center">
+                  <p className="text-xs text-[#5A4638] leading-relaxed">
+                    ℹ️ <strong>Notă privind tarifele:</strong> După trimiterea formularului, echipa noastră va verifica manual disponibilitatea camerelor pentru intervalul ales. Prețul final exact și detaliile de plată vă vor fi comunicate telefonic sau prin e-mail.
+                  </p>
                 </div>
 
                 <button type="submit" disabled={isLoading} className="w-full rounded-2xl bg-[#9C6644] py-4 font-bold uppercase tracking-widest text-[#FEFAE0] shadow-lg transition-all hover:bg-[#846644] active:scale-95 disabled:opacity-50">
-                  {isLoading ? "Se trimite solicitarea..." : "Solicită Disponibilitate →"}
+                  {isLoading ? "Se trimite solicitarea..." : "Trimite Solicitarea →"}
                 </button>
               </form>
             </div>
@@ -286,8 +196,10 @@ export default function RezervariePage() {
               <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-green-600 border-4 border-white shadow-lg">
                 <svg className="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"/></svg>
               </div>
-              <h2 className="mb-3 font-serif text-2xl font-bold text-[#3E2A20]">Solicitare Trimisă!</h2>
-              <p className="mb-8 text-[#5A4638]">Vă mulțumim! Verificăm calendarul și vă contactăm pe email în cel mai scurt timp pentru confirmare.</p>
+              <h2 className="mb-3 font-serif text-2xl font-bold text-[#3E2A20]">Solicitare Primită!</h2>
+              <p className="mb-8 text-[#5A4638] text-sm leading-relaxed">
+                Vă mulțumim! Verificăm imediat situația camerelor libere și vă vom contacta prin e-mail sau telefonic pentru a vă confirma disponibilitatea și prețul total calculat.
+              </p>
               <button onClick={() => setSuccessModal(false)} className="w-full rounded-2xl bg-[#9C6644] py-4 font-bold text-white shadow-md hover:bg-[#846644]">Închide</button>
             </div>
           </div>
